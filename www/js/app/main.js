@@ -2,11 +2,13 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
-	"text!templates/join.html"
-], function($, _, Backbone, JoinTemplate) {
+	"text!templates/join.html",
+	"text!templates/board.html"
+], function($, _, Backbone, JoinTemplate, BoardTemplate) {
 	var Router = Backbone.Router.extend({
 		routes: {
-			'': 'home'
+			'': 'home',
+			'board': 'board'
 		}
 	});
 	var router = new Router();
@@ -14,6 +16,7 @@ define([
 	var User = Backbone.Model.extend({
 		urlRoot: '/users'
 	});
+	var user = null;
 
 	var Join = Backbone.View.extend({
 		el: '.page',
@@ -26,10 +29,12 @@ define([
 			'click .watch': 'watchGame'
 		},
 		joinGame: function() {
-			var user = new User();
-			user.save({}, {
+			var that = this;
+			this.user = new User();
+			this.user.save({}, {
 				success: function(user) {
-					console.log(user);
+					that.user = user
+					router.navigate('board', {trigger:true});
 				}
 			});
 		},
@@ -38,9 +43,20 @@ define([
 		}
 	});
 	var join = new Join();
+	var Board = Backbone.View.extend({
+		el: '.page',
+		render: function() {
+			var template = _.template(BoardTemplate, {user: this.user});
+			this.$el.html(template);
+		}
+	});
+	var board = new Board();
 
 	router.on('route:home', function() {
 		join.render();
+	});
+	router.on('route:board', function() {
+		board.render();
 	});
 
 	Backbone.history.start();
