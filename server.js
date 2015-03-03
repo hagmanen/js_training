@@ -1,6 +1,8 @@
 var express    = require('express'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    Board = require('./board.js');
 var app = express();
+var board = new Board();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -12,7 +14,21 @@ router.get('/', function(req, res) {
 });
 
 app.post('/users', function(req, res) {
-	return res.send({'id': 'nrone'});
+	var user = board.addUser();
+	if(user) {
+		return res.send(user);
+	} else {
+		return res.status(204).send();
+	}
+});
+
+app.get('/board', function(req, res) {
+	return res.send({'id': 'board'});
+});
+
+app.delete('/nuke', function(req, res) {
+	board.clear();
+	return res.send();
 });
 
 app.use('/api', router);
