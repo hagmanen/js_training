@@ -23,6 +23,12 @@ Board.prototype.getBoard = function() {
 	return {'marks': marks};
 };
 
+Board.prototype.play = function(player, poss) {
+	if(poss < 100 && poss >= 0) {
+		marks[poss] = player;
+	}
+};
+
 Board.prototype.clear = function() {
 	users = [];
 	marks = [];

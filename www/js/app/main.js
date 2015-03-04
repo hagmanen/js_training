@@ -58,15 +58,25 @@ define([
 			'click .mark': 'clickMark'
 		},
 		clickMark : function(ev) {
-			console.log(ev.currentTarget.id);
+			var that = this;
+			$.ajax({
+				url: '/board/' + ev.currentTarget.id,
+				type: 'put',
+				success: function(board) {
+					that.compileTemplate(new Board(board));
+				}
+			});
+		},
+		compileTemplate: function(board) {
+			var template = _.template(BoardTemplate);
+			this.$el.html(template({user: user, board: board}));
 		},
 		render: function() {
 			var that = this;
 			var board = new Board();
 			board.fetch({
 				success: function(board) {
-					var template = _.template(BoardTemplate);
-					that.$el.html(template({user: user, board: board}));
+					that.compileTemplate(board);
 				}
 			});
 		}

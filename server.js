@@ -28,6 +28,11 @@ app.get('/board', function(req, res) {
 	return res.send(board.getBoard());
 });
 
+app.put('/board/:id', function(req, res){
+	board.play('r', req.params.id);
+	return res.send(board.getBoard());
+});
+
 app.delete('/nuke', function(req, res) {
 	board.clear();
 	return res.send();
