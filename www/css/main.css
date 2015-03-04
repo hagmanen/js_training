@@ -1,0 +1,9 @@
+.mark {
+	float: left;
+	width: 20px;
+	height: 20px;
+}
+
+.board {
+	width: 160px;
+}
