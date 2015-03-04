@@ -1,6 +1,6 @@
 var Board = function() {};
 
-var users = [];
+var users = [{}];
 var newId = function() {
 	return users.length;
 };
@@ -15,11 +15,11 @@ Board.prototype.addUser = function() {
 		return user;
 	}
 	return null;
-}
+};
 
 Board.prototype.clear = function() {
 	users = [];
-}
+};
 
 
 module.exports = Board;

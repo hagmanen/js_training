@@ -33,11 +33,10 @@ define([
 			'click .nuke': 'nukeGame'
 		},
 		joinGame: function() {
-			var that = this;
 			user = new User();
 			user.save({}, {
 				success: function(u) {
-					user = u
+					user = u;
 					router.navigate('board', {trigger:true});
 				}
 			});

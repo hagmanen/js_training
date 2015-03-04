@@ -1,0 +1,27 @@
+{
+  "name": "js-training",
+  "version": "0.0.1",
+  "description": "js project to learn js",
+  "author": "Fredrik Hagman <hagmanen@gmail.com>",
+  "contributors": [{}],
+  "scripts": {
+    "start": "nodejs server.js",
+    "predeploy": "echo im about to deploy",
+    "postdeploy": "echo ive deployed"
+  },
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hagmanen/js_training"
+  },
+  "dependencies": {
+    "express": "*",
+    "body-parser": "*"
+  },
+  "devDependencies": {
+  },
+  "preferGlobal": true,
+  "private": true,
+  "analyze": true,
+  "license": "MIT"
+}
