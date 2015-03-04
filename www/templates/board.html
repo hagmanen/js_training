@@ -1,56 +1,10 @@
 <%= user ? user.get('color'): 'watching' %>
 <div class="board">
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/blue.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/red.svg' /></div>
-           <div class="mark"><img src='/img/red.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/blue.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/red.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-           <div class="mark"><img src='/img/empty.svg' /></div>
-</div>           
+   <% var marks = board.get('marks'); %>
+   <% var l = marks.length; %>
+   <% for(var i = 0; i < l; i++) { %>
+      <div id="<%= i %>" class="mark">
+      <img src='/img/<%= marks[i] %>.svg' />
+      </div>
+   <% } %>
+</div>

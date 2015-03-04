@@ -23,7 +23,16 @@ app.post('/users', function(req, res) {
 });
 
 app.get('/board', function(req, res) {
-	return res.send({'id': 'board'});
+	var marks = [];
+	var length = 100; // user defined length
+
+	for(var i = 0; i < length; i++) {
+	    marks.push('e');
+	}
+	return res.send({
+		'id': 'board',
+		'marks' : marks
+			});
 });
 
 app.delete('/nuke', function(req, res) {

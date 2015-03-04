@@ -54,6 +54,12 @@ define([
 	var join = new Join();
 	var BoardView = Backbone.View.extend({
 		el: '.page',
+		events: {
+			'click .mark': 'clickMark'
+		},
+		clickMark : function(ev) {
+			console.log(ev.currentTarget.id);
+		},
 		render: function() {
 			var that = this;
 			var board = new Board();
