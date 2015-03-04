@@ -1,6 +1,8 @@
 var Board = function() {};
 
-var users = [{}];
+var users = null;
+var marks = null;
+
 var newId = function() {
 	return users.length;
 };
@@ -17,8 +19,18 @@ Board.prototype.addUser = function() {
 	return null;
 };
 
+Board.prototype.getBoard = function() {
+	return {'marks': marks};
+};
+
 Board.prototype.clear = function() {
 	users = [];
+	marks = [];
+
+	var length = 100;
+	for(var i = 0; i < length; i++) {
+	    marks.push('e');
+	}
 };
 
 

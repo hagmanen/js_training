@@ -4,6 +4,8 @@ var express    = require('express'),
 var app = express();
 var board = new Board();
 
+board.clear();
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -23,16 +25,7 @@ app.post('/users', function(req, res) {
 });
 
 app.get('/board', function(req, res) {
-	var marks = [];
-	var length = 100; // user defined length
-
-	for(var i = 0; i < length; i++) {
-	    marks.push('e');
-	}
-	return res.send({
-		'id': 'board',
-		'marks' : marks
-			});
+	return res.send(board.getBoard());
 });
 
 app.delete('/nuke', function(req, res) {
