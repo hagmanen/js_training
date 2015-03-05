@@ -24,12 +24,21 @@ app.post('/users', function(req, res) {
 	}
 });
 
+app.get('/user/:id', function(req, res) {
+	var user = board.getUser(req.params.id);
+	if(user) {
+		return res.send(user);
+	} else {
+		return res.status(204).send();
+	}
+});
+
 app.get('/board', function(req, res) {
 	return res.send(board.getBoard());
 });
 
 app.put('/board/:id', function(req, res){
-	board.play('r', req.params.id);
+	board.play(board.getUser(req.body.user_id).color, req.params.id);
 	return res.send(board.getBoard());
 });
 

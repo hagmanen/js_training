@@ -4,10 +4,14 @@ var users = null;
 var marks = null;
 
 var newId = function() {
-	return users.length;
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 };
+
 var getColor = function() {
-	return users.length ? 'blue' : 'red';
+	return users.length ? 'b' : 'r';
 };
 
 Board.prototype.addUser = function() {
@@ -15,6 +19,13 @@ Board.prototype.addUser = function() {
 		var user = {id : newId(), color: getColor()};
 		users.push(user);
 		return user;
+	}
+	return null;
+};
+
+Board.prototype.getUser = function(id) {
+	for(var i = 0; i < users.length; i++) {
+		if(id == users[i].id) { return  users[i]; }
 	}
 	return null;
 };

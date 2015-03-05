@@ -62,6 +62,8 @@ define([
 			$.ajax({
 				url: '/board/' + ev.currentTarget.id,
 				type: 'put',
+				dataType: 'json',
+				data: { user_id: user.id },
 				success: function(board) {
 					that.compileTemplate(new Board(board));
 				}
