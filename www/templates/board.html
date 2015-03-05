@@ -1,10 +1,22 @@
 <%= user ? user.get('color'): 'watching' %>
+<svg width="0" height="0">
+  <defs>
+   <g id="mark">
+      <rect width="20" height="20" stroke-width="1.5" stroke="black" fill-opacity="0"/>
+      <g class="cross">
+         <line class="red" x1="5" x2="15" y1="5" y2="15" stroke-width="2.5" />
+         <line class="red" x1="15" x2="5" y1="5" y2="15" stroke-width="2.5" />
+      </g>
+   </g>
+  </defs>
+</svg>
+
 <div class="board">
    <% var marks = board.get('marks'); %>
    <% var l = marks.length; %>
    <% for(var i = 0; i < l; i++) { %>
-      <div id="<%= i %>" class="mark">
-      <img src='/img/<%= marks[i] %>.svg' />
+      <div id="<%= i %>" class="mark <%= marks[i] %>">
+      <svg><use xlink:href="#mark" /></svg>
       </div>
    <% } %>
 </div>

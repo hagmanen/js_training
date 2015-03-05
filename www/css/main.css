@@ -7,3 +7,12 @@
 .board {
 	width: 200px;
 }
+
+div.red {
+	stroke: red;
+}
+div.blue {
+        stroke: blue;
+}
+
+

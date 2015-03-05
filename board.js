@@ -11,7 +11,7 @@ var newId = function() {
 };
 
 var getColor = function() {
-	return users.length ? 'b' : 'r';
+	return users.length ? 'blue' : 'red';
 };
 
 Board.prototype.addUser = function() {
