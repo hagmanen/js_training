@@ -24,7 +24,7 @@ app.post('/users', function(req, res) {
 	}
 });
 
-app.get('/user/:id', function(req, res) {
+app.get('/users/:id', function(req, res) {
 	var user = board.getUser(req.params.id);
 	if(user) {
 		return res.send(user);

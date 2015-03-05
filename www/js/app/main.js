@@ -16,7 +16,6 @@ define([
 	var User = Backbone.Model.extend({
 		urlRoot: '/users'
 	});
-	var user = null;
 	var Board = Backbone.Model.extend({
 		urlRoot: '/board'
 	});
@@ -35,8 +34,8 @@ define([
 		joinGame: function() {
 			user = new User();
 			user.save({}, {
-				success: function(u) {
-					user = u;
+				success: function(user) {
+					sessionStorage.setItem("user_id", user.id);
 					router.navigate('board', {trigger:true});
 				}
 			});
@@ -63,22 +62,28 @@ define([
 				url: '/board/' + ev.currentTarget.id,
 				type: 'put',
 				dataType: 'json',
-				data: { user_id: user.id },
+				data: { user_id: that.user.id },
 				success: function(board) {
 					that.compileTemplate(new Board(board));
 				}
 			});
 		},
+		user: null,
 		compileTemplate: function(board) {
 			var template = _.template(BoardTemplate);
-			this.$el.html(template({user: user, board: board}));
+			this.$el.html(template({user: this.user, board: board}));
 		},
 		render: function() {
 			var that = this;
 			var board = new Board();
-			board.fetch({
-				success: function(board) {
-					that.compileTemplate(board);
+			this.user = new User({id: sessionStorage.getItem("user_id")});
+			this.user.fetch({
+				success: function() {
+					board.fetch({
+						success: function(board) {
+							that.compileTemplate(board);
+						}
+					});
 				}
 			});
 		}
