@@ -1,5 +1,6 @@
 var express    = require('express'),
     bodyParser = require('body-parser'),
+    socket = require('socket.io'),
     Board = require('./board.js');
 var app = express();
 var board = new Board();
@@ -38,7 +39,9 @@ app.get('/board', function(req, res) {
 });
 
 app.put('/board/:id', function(req, res){
-	board.play(board.getUser(req.body.user_id).color, req.params.id);
+	board.play(board.getUser(req.body.user_id), req.params.id);
+	//io.broadcast.emit('moved');
+	console.log('emit moved');
 	return res.send(board.getBoard());
 });
 
@@ -50,4 +53,6 @@ app.delete('/nuke', function(req, res) {
 app.use('/api', router);
 app.use('/', express.static(__dirname + '/www'));
 
-app.listen(8080);
+var io = socket(app.listen(8080));
+var notification =  io.of('/notification').on('connect', function() {
+});

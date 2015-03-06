@@ -2,6 +2,7 @@ var Board = function() {};
 
 var users = null;
 var marks = null;
+var turn = 0;
 
 var newId = function() {
     var S4 = function() {
@@ -31,13 +32,18 @@ Board.prototype.getUser = function(id) {
 };
 
 Board.prototype.getBoard = function() {
-	return {'marks': marks};
+	return {'marks': marks, 'turn': users[turn].color};
 };
 
 Board.prototype.play = function(player, poss) {
-	if(poss < 100 && poss >= 0) {
-		marks[poss] = player;
+	console.log(player.id + ' play when it is ' + users[turn].id + ' turn');
+	if(player.id != users[turn].id) {
+		return;
 	}
+	if(poss < 100 && poss >= 0) {
+		marks[poss] = player.color;
+	}
+	turn = (turn + 1) % 2;
 };
 
 Board.prototype.clear = function() {

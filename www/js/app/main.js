@@ -2,9 +2,10 @@ define([
 	"jquery",
 	"underscore",
 	"backbone",
+	"socket",
 	"text!templates/join.html",
 	"text!templates/board.html"
-], function($, _, Backbone, JoinTemplate, BoardTemplate) {
+], function($, _, Backbone, io, JoinTemplate, BoardTemplate) {
 	var Router = Backbone.Router.extend({
 		routes: {
 			'': 'home',
@@ -70,8 +71,22 @@ define([
 		},
 		user: null,
 		compileTemplate: function(board) {
+			var that = this;
 			var template = _.template(BoardTemplate);
 			this.$el.html(template({user: this.user, board: board}));
+			if(board.get('turn') != this.user.color) {
+				var notification = io(document.location.href + '/notification');
+				notification.on('moved', function() {
+					console.log('Hello');
+					var board = new Board();
+					board.fetch({
+						success: function(board) {
+							that.compileTemplate(board);
+						}
+					});
+				});
+			}
+				
 		},
 		render: function() {
 			var that = this;
