@@ -58,48 +58,37 @@ define([
 			'click .mark': 'clickMark'
 		},
 		clickMark : function(ev) {
-			var that = this;
-			$.ajax({
-				url: '/board/' + ev.currentTarget.id,
-				type: 'put',
-				dataType: 'json',
-				data: { user_id: that.user.id },
-				success: function(board) {
-					that.compileTemplate(new Board(board));
-				}
-			});
+			this.notification.emit('move', { poss: ev.currentTarget.id, user: this.user.id});
+			this.updateBoard();
 		},
 		user: null,
+		notification: null,
 		compileTemplate: function(board) {
 			var that = this;
 			var template = _.template(BoardTemplate);
 			this.$el.html(template({user: this.user, board: board}));
-			if(board.get('turn') != this.user.color) {
-				var notification = io(document.location.href + '/notification');
-				notification.on('moved', function() {
-					console.log('Hello');
-					var board = new Board();
-					board.fetch({
-						success: function(board) {
-							that.compileTemplate(board);
-						}
-					});
-				});
-			}
 				
+		},
+		updateBoard: function() {
+			var that = this;
+			var board = new Board();
+			board.fetch({
+				success: function(board) {
+					that.compileTemplate(board);
+				}
+			});
 		},
 		render: function() {
 			var that = this;
-			var board = new Board();
+			this.notification = io.connect(document.location.href);
 			this.user = new User({id: sessionStorage.getItem("user_id")});
 			this.user.fetch({
 				success: function() {
-					board.fetch({
-						success: function(board) {
-							that.compileTemplate(board);
-						}
-					});
+					that.updateBoard();
 				}
+			});
+			this.notification.on('moved', function() {
+				that.updateBoard();
 			});
 		}
 	});

@@ -38,13 +38,6 @@ app.get('/board', function(req, res) {
 	return res.send(board.getBoard());
 });
 
-app.put('/board/:id', function(req, res){
-	board.play(board.getUser(req.body.user_id), req.params.id);
-	//io.broadcast.emit('moved');
-	console.log('emit moved');
-	return res.send(board.getBoard());
-});
-
 app.delete('/nuke', function(req, res) {
 	board.clear();
 	return res.send();
@@ -54,5 +47,15 @@ app.use('/api', router);
 app.use('/', express.static(__dirname + '/www'));
 
 var io = socket(app.listen(8080));
-var notification =  io.of('/notification').on('connect', function() {
+io.on('connect', function(socket) {
+	console.log('got con');
+	socket.on('move', function(msg) {
+	console.log('got move');
+	console.log(Object.keys(msg));
+		if(board.play(board.getUser(msg.user), msg.poss)){
+			socket.broadcast.emit('moved');
+		}
+	});
+}).on('disconnect', function() {
+	console.log('disconnected');
 });

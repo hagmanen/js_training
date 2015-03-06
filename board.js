@@ -38,12 +38,13 @@ Board.prototype.getBoard = function() {
 Board.prototype.play = function(player, poss) {
 	console.log(player.id + ' play when it is ' + users[turn].id + ' turn');
 	if(player.id != users[turn].id) {
-		return;
+		return false;
 	}
 	if(poss < 100 && poss >= 0) {
 		marks[poss] = player.color;
 	}
 	turn = (turn + 1) % 2;
+	return true;
 };
 
 Board.prototype.clear = function() {
